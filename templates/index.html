@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThinScale Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background-color: #f7f7f7;
+    }
+
+    header {
+        background-color: #00014b;
+        color: white;
+        padding: 30px;
+        text-align: right;
+    }
+
+    .logo {
+        display: block;
+        height: 26px;
+        color: #0f2fa9;
+        font-size: 15px;
+        letter-spacing: 1px;
+        background-image: url("https://static.helpjuice.com/helpjuice_production/uploads/template/brand_image/4871/7512/white_logo.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        flex-grow: 1;
+        padding-right: 15px;
+    }
+
+    .logo-text {
+        font-size: 20px;
+        text-align: right;
+        color: white;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    form {
+        margin-top: 20px;
+        display: flex;
+    }
+
+    input[type="text"] {
+        width: calc(100% - 80px);
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px 0 0 4px;
+    }
+
+    button[type="submit"] {
+        width: 80px;
+        padding: 10px;
+        font-size: 16px;
+        background-color: #060862;
+        color: white;
+        border: none;
+        border-radius: 0 4px 4px 0;
+        cursor: pointer;
+    }
+
+    .button-secondary {
+        background-color: #060862;
+        color: white;
+        margin-left: 10px;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .response {
+        margin-top: 20px;
+    }
+
+    .response h3 {
+        color: #333;
+        font-size: 18px;
+        margin-top: 0;
+    }
+
+    .response pre {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 4px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        line-height: 1.6;
+        overflow-x: auto;
+        border: 1px solid #ccc;
+    }
+
+    .error {
+        color: red;
+    }
+
+    .sources {
+        font-size: 12px;
+        color: #666;
+        margin-top: 10px;
+    }
+
+    .search-indicator {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: rgb(0, 119, 255);
+        display: none;
+        margin-left: 0px;
+    }
+
+</style>
+<body>
+    <header>
+        <div class="logo">
+            <div class="search-indicator" id="searchIndicator"></div>
+            <span class="logo-text">AI Assistant</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <form id="queryForm" method="POST">
+            <input type="text" name="query" placeholder="Enter your query...">
+            <button type="submit">Submit</button>
+            <button type="button" class="button-secondary" id="endButton">End</button>
+            
+        </form>
+        
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        
+        {% if query %}
+            <div class="response">
+                <h3>Your Query:</h3>
+                <p>{{ query }}</p>
+                <h3>Response:</h3>
+                <pre id="responseText">{{ response_with_links|safe }}</pre>
+                <p class="sources">{{ sources }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // JavaScript to handle "End" button click
+        document.getElementById("endButton").addEventListener("click", function() {
+            // Clear the response text
+            document.getElementById("responseText").innerHTML = "Thank you for using ThinScale AI, I hope I was of assistance!";
+        });
+
+        // JavaScript to show search indicator
+        document.getElementById("queryForm").addEventListener("submit", function() {
+            var indicator = document.getElementById("searchIndicator");
+            indicator.style.display = "inline-block";
+        });
+    </script>
+</body>
+</html>
